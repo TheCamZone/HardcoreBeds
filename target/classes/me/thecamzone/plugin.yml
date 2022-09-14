@@ -1,0 +1,13 @@
+main: me.thecamzone.main.Main
+name: HardcoreBeds
+version: 0.0.1
+description: HardcoreBeds for Weekly-Deer4161
+api-version: 1.19
+author: TheCamZone
+commands:
+  hardcorebeds:
+    description: Main command for administrators
+    aliases: [hb]
+    permission: hardcorebeds.admin
+    permission-message: "Unknown command. Type \"/help\" for help."
+    usage: /<command>
