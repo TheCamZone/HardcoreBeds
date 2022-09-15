@@ -4,16 +4,11 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-
 import me.thecamzone.main.Data;
 import me.thecamzone.main.Main;
 import net.md_5.bungee.api.ChatColor;
@@ -26,7 +21,7 @@ public class HardcoreBeds implements CommandExecutor {
 			if(!sender.hasPermission("hardcorebeds.admin")) return true;
 			
 			if(args.length == 0) {
-				sender.sendMessage(ChatColor.GRAY + "HardcoreBeds created by TheCamZone for u/Weekly-Deer4161");
+				sender.sendMessage(ChatColor.GRAY + "HardcoreBeds created by TheCamZone for CactusKing05");
 				sender.sendMessage(ChatColor.GRAY + "Type " + ChatColor.GREEN + "/hb help" + ChatColor.GRAY + " for help.");
 				return true;
 			}
@@ -36,7 +31,9 @@ public class HardcoreBeds implements CommandExecutor {
 				if(args[0].equalsIgnoreCase("help")) {
 					sender.sendMessage(ChatColor.GRAY + "Commands:");
 					sender.sendMessage(ChatColor.WHITE + "  - " + ChatColor.GREEN + "/hb help " + ChatColor.GRAY + "displays this message.");
-					sender.sendMessage(ChatColor.WHITE + "  - " + ChatColor.GREEN + "/hb give <player> " + ChatColor.GRAY + "gives a hardcore bed.");
+					sender.sendMessage(ChatColor.WHITE + "  - " + ChatColor.GREEN + "/hb give <player> [color] " + ChatColor.GRAY + "gives a hardcore bed.");
+					sender.sendMessage(ChatColor.WHITE + "  - " + ChatColor.GREEN + "/hb list " + ChatColor.GRAY + "lists online hardcore players.");
+					sender.sendMessage(ChatColor.WHITE + "  - " + ChatColor.GREEN + "/hb remove <player> " + ChatColor.GRAY + "removes an online hardcore player.");
 					return true;
 				}
 				
@@ -96,9 +93,9 @@ public class HardcoreBeds implements CommandExecutor {
 					
 					Player player = Bukkit.getPlayer(args[1]);
 					
-					ItemStack bed = createBed(player);
+					ItemStack bed = Main.plugin.createBed(player);
 					
-					tryGiveItem(sender, player, bed);
+					Main.plugin.tryGiveItem(sender, player, bed);
 					return true;
 				}
 				
@@ -121,9 +118,9 @@ public class HardcoreBeds implements CommandExecutor {
 					
 					Material material = Material.valueOf(args[2].toUpperCase() + "_BED");
 					
-					ItemStack bed = createBed(player, material);
+					ItemStack bed = Main.plugin.createBed(player, material);
 					
-					tryGiveItem(sender, player, bed);
+					Main.plugin.tryGiveItem(sender, player, bed);
 					return true;
 				}
 				
@@ -132,7 +129,9 @@ public class HardcoreBeds implements CommandExecutor {
 				
 				sender.sendMessage(ChatColor.GRAY + "Commands:");
 				sender.sendMessage(ChatColor.WHITE + "  - " + ChatColor.GREEN + "/hb help " + ChatColor.GRAY + "displays this message.");
-				sender.sendMessage(ChatColor.WHITE + "  - " + ChatColor.GREEN + "/hb give <player> " + ChatColor.GRAY + "gives a hardcore bed.");
+				sender.sendMessage(ChatColor.WHITE + "  - " + ChatColor.GREEN + "/hb give <player> [color] " + ChatColor.GRAY + "gives a hardcore bed.");
+				sender.sendMessage(ChatColor.WHITE + "  - " + ChatColor.GREEN + "/hb list " + ChatColor.GRAY + "lists online hardcore players.");
+				sender.sendMessage(ChatColor.WHITE + "  - " + ChatColor.GREEN + "/hb remove <player> " + ChatColor.GRAY + "removes an online hardcore player.");
 				return true;
 				
 			}
@@ -140,36 +139,6 @@ public class HardcoreBeds implements CommandExecutor {
 		}
 		
 		return true;
-	}
-
-	private void tryGiveItem(CommandSender sender, Player player, ItemStack item) { 
-		if(player.getInventory().addItem(item).isEmpty()) {
-			sender.sendMessage(ChatColor.GREEN + "Successfully gave " + player.getName() + " a bed.");
-		} else {
-			sender.sendMessage(ChatColor.RED + "Tried to give " + player.getName() + " a bed, but their inventory was full.");
-		}
-	}
-	
-	public ItemStack createBed(Player player) {
-		ItemStack bed = new ItemStack(Material.RED_BED);
-		ItemMeta bedMeta = bed.getItemMeta();
-		PersistentDataContainer pdc = bedMeta.getPersistentDataContainer();
-		
-		pdc.set(new NamespacedKey(Main.plugin, "hardcorebeds"), PersistentDataType.STRING, player.getUniqueId().toString());
-		
-		bed.setItemMeta(bedMeta);
-		return bed;
-	}
-	
-	public ItemStack createBed(Player player, Material material) {
-		ItemStack bed = new ItemStack(material);
-		ItemMeta bedMeta = bed.getItemMeta();
-		PersistentDataContainer pdc = bedMeta.getPersistentDataContainer();
-		
-		pdc.set(new NamespacedKey(Main.plugin, "hardcorebeds"), PersistentDataType.STRING, player.getUniqueId().toString());
-		
-		bed.setItemMeta(bedMeta);
-		return bed;
 	}
 	
 }

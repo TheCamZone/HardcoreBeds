@@ -13,6 +13,7 @@ public class Data {
 
 	private static List<String> hardcorePlayers = new ArrayList<>();
 	private static List<String> placedHardcoreBeds = new ArrayList<>();
+	private static List<String> receivedBed = new ArrayList<>();
 	
 	public static final List<Material> BEDS = Arrays.asList(Material.BLACK_BED, Material.BLUE_BED, Material.BROWN_BED,
 			Material.CYAN_BED, Material.GRAY_BED, Material.GREEN_BED, Material.LIGHT_BLUE_BED, Material.LIGHT_GRAY_BED,
@@ -25,19 +26,55 @@ public class Data {
 	public static void load() {
 		hardcorePlayers = DataFile.get().getStringList("HardcorePlayers");
 		placedHardcoreBeds = DataFile.get().getStringList("PlacedHardcoreBeds");
+		receivedBed = DataFile.get().getStringList("ReceivedBeds");
 	}
 
 	public static void save() {
 		DataFile.get().set("HardcorePlayers", hardcorePlayers);
 		DataFile.get().set("PlacedHardcoreBeds", placedHardcoreBeds);
+		DataFile.get().set("ReceivedBeds", receivedBed);
 		DataFile.save();
 	}
 
+	public static List<String> getReceivedBeds() {
+		return receivedBed;
+		
+	}
+	
+	public static void addReceivedBed(UUID uuid) {
+		if(receivedBed.contains(uuid.toString())) return;
+		
+		receivedBed.add(uuid.toString());
+		save();
+	}
+	
+	public static Boolean removeReceivedBed(UUID uuid) {
+		if (receivedBed.remove(uuid.toString())) {
+			save();
+			return true;
+		}
+
+		return false;
+	}
+	
 	public static void addPlacedBed(UUID uuid) {
 		if(placedHardcoreBeds.contains(uuid.toString())) return;
 		
 		placedHardcoreBeds.add(uuid.toString());
 		save();
+	}
+	
+	public static Boolean removePlacedBeds(UUID uuid) {
+		if (placedHardcoreBeds.remove(uuid.toString())) {
+			save();
+			return true;
+		}
+
+		return false;
+	}
+	
+	public static List<String> getPlacedBeds() {
+		return placedHardcoreBeds;
 	}
 	
 	public static Boolean removeHardcorePlayer(UUID uuid) {

@@ -30,13 +30,13 @@ public class OnCustomBlockBreak implements Listener {
 		String uuid = customBlockData.get(new NamespacedKey(Main.plugin, "hardcorebeds"), PersistentDataType.STRING);
 		
 		Data.addHardcorePlayer(UUID.fromString(uuid));
+		Data.removePlacedBeds(UUID.fromString(uuid));
 		
 		if(Bukkit.getPlayer(UUID.fromString(uuid)) == null) return;
 			
 		Player bedOwner = Bukkit.getPlayer(UUID.fromString(uuid));
 			
 		bedOwner.sendMessage(ChatColor.RED + "Your bed has been destroyed! You will not respawn from this point forward.");
-		
 	}
 
 }
