@@ -18,7 +18,7 @@ public class DataFile {
 	// Generates file if not created.
 	public static void setup()
 	{
-		file = new File(Main.plugin.getDataFolder(), "warps.yml");
+		file = new File(Main.plugin.getDataFolder(), "data.yml");
 		
 		if(!file.exists())
 		{
@@ -27,7 +27,7 @@ public class DataFile {
 				file.createNewFile();
 			} catch (IOException e)
 			{
-				Bukkit.getServer().getConsoleSender().sendMessage("Could not create warps.yml.");
+				Bukkit.getServer().getConsoleSender().sendMessage("Could not create data.yml.");
 			}
 			
 		}
@@ -47,7 +47,7 @@ public class DataFile {
 			customFile.save(file);
 		} catch (IOException e)
 		{
-			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Could not save warps.yml.");
+			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Could not save data.yml.");
 		}
 		
 	}

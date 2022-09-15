@@ -12,32 +12,50 @@ import me.thecamzone.files.DataFile;
 public class Data {
 
 	private static List<String> hardcorePlayers = new ArrayList<>();
+	private static List<String> placedHardcoreBeds = new ArrayList<>();
+	
 	public static final List<Material> BEDS = Arrays.asList(Material.BLACK_BED, Material.BLUE_BED, Material.BROWN_BED,
 			Material.CYAN_BED, Material.GRAY_BED, Material.GREEN_BED, Material.LIGHT_BLUE_BED, Material.LIGHT_GRAY_BED,
 			Material.LIME_BED, Material.MAGENTA_BED, Material.ORANGE_BED, Material.PINK_BED, Material.PURPLE_BED,
 			Material.RED_BED, Material.WHITE_BED, Material.YELLOW_BED);
-	
+
+	public static final List<String> COLORS = Arrays.asList("BLACK", "BLUE", "BROWN", "CYAN", "GRAY", "GREEN",
+			"LIGHT_BLUE", "LIGHT_GRAY", "LIME", "MAGENTA", "ORANGE", "PINK", "PURPLE", "RED", "YELLOW");
+
 	public static void load() {
 		hardcorePlayers = DataFile.get().getStringList("HardcorePlayers");
+		placedHardcoreBeds = DataFile.get().getStringList("PlacedHardcoreBeds");
 	}
-	
+
 	public static void save() {
 		DataFile.get().set("HardcorePlayers", hardcorePlayers);
+		DataFile.get().set("PlacedHardcoreBeds", placedHardcoreBeds);
 		DataFile.save();
+	}
+
+	public static void addPlacedBed(UUID uuid) {
+		if(placedHardcoreBeds.contains(uuid.toString())) return;
+		
+		placedHardcoreBeds.add(uuid.toString());
+		save();
 	}
 	
 	public static Boolean removeHardcorePlayer(UUID uuid) {
-		if(hardcorePlayers.remove(uuid.toString())) {
+		if (hardcorePlayers.remove(uuid.toString())) {
+			save();
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public static void addHardcorePlayer(UUID uuid) {
+		if(hardcorePlayers.contains(uuid.toString())) return;
+		
 		hardcorePlayers.add(uuid.toString());
+		save();
 	}
-	
+
 	public static List<String> getHardcorePlayers() {
 		return hardcorePlayers;
 	}

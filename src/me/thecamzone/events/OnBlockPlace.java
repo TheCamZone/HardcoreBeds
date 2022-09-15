@@ -1,7 +1,10 @@
 package me.thecamzone.events;
 
+import java.util.UUID;
+
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -14,6 +17,7 @@ import com.jeff_media.customblockdata.CustomBlockData;
 
 import me.thecamzone.main.Data;
 import me.thecamzone.main.Main;
+import net.md_5.bungee.api.ChatColor;
 
 public class OnBlockPlace implements Listener {
 
@@ -35,6 +39,11 @@ public class OnBlockPlace implements Listener {
 		
 		customBlockData.set(new NamespacedKey(Main.plugin, "hardcorebeds"), PersistentDataType.STRING, uuid);
 		
+		Player player = e.getPlayer();
+		
+		Data.addPlacedBed(UUID.fromString(uuid));
+		
+		player.sendMessage(ChatColor.GRAY + "You have placed your hardcore bed. If it is destroyed, you cannot respawn.");
 	}
 	
 }
