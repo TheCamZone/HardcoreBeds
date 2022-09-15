@@ -67,7 +67,7 @@ public class Main extends JavaPlugin {
 		
 		pdc.set(new NamespacedKey(Main.plugin, "hardcorebeds"), PersistentDataType.STRING, player.getUniqueId().toString());
 		
-		bedMeta.setDisplayName(ChatColor.WHITE + "Hardcore Bed");
+		bedMeta.setDisplayName(ChatColor.WHITE + player.getName() + "'s Hardcore Bed");
 		bedMeta.setLore(Arrays.asList(
 				ChatColor.GRAY + "Place the bed to be able to respawn.",
 				ChatColor.GRAY + "If your bed is destroyed,",
@@ -85,7 +85,7 @@ public class Main extends JavaPlugin {
 		
 		pdc.set(new NamespacedKey(Main.plugin, "hardcorebeds"), PersistentDataType.STRING, player.getUniqueId().toString());
 		
-		bedMeta.setDisplayName(ChatColor.WHITE + "Hardcore Bed");
+		bedMeta.setDisplayName(ChatColor.WHITE + player.getName() + "'s Hardcore Bed");
 		bedMeta.setLore(Arrays.asList(
 				ChatColor.GRAY + "Place the bed to be able to respawn.",
 				ChatColor.GRAY + "If your bed is destroyed,",
